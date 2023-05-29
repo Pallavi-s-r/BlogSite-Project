@@ -2,6 +2,16 @@ const blog = require("../models/blog");
 const blogModel = require("../models/blog");
 const moment = require("moment");
 
+
+function checkTags(tags) {
+  let arr=[];
+  for(let i=0;i<tags.length;i++){
+    if(!(tags[i].length==0 && tags[i][0]==" ")){
+      arr.push(tags[i]);
+    }
+    return arr;
+}
+
 const createBlog = async function (req, res) {
   try {
     const data = req.body;
@@ -13,6 +23,7 @@ const createBlog = async function (req, res) {
         .send({ status: false, msg: "not a valid author to create a blog" });
       //   if isDeleted true in database or we are passing different attributes in query params
     }
+    data.tags=checkTags(data.tags);
     const blog = await blogModel.create(data);
     res.status(201).send({ status: true, data: blog });
   } catch (error) {
@@ -44,7 +55,7 @@ const updatedBlog = async (req, res) => {
   try {
     const blogId = req.params.blogId;
     const { title, body, tags, subcategory } = req.body;
-
+    tags=checkTags(tags);
     let updateContent = {
       title: title,
       body: body,

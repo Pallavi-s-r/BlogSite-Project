@@ -9,11 +9,7 @@ function checkName(name) {
 
 const createAuthor = async (req, res) => {
   try {
-    const { fname, lname, title, email, password } = req.body;
-    // handling mandatory field name is present in req.body
-    if (!fname || !lname || !title || !email || !password) {
-      return res.status(400).send({ status: false, msg: "Invalid request" });
-    }
+    
     // handling format of fname in req.body
     let check = checkName(fname);
     if (!check) {

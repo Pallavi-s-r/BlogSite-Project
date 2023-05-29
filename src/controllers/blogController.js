@@ -1,21 +1,5 @@
-const blog = require("../models/blog");
 const blogModel = require("../models/blog");
 
-// it is handling whitespaces in array of string and empty string,null
-function checkTags(tags) {
-  let arr = [];
-  for (let i = 0; i < tags.length; i++) {
-    let c = 1;
-    for (let j = 0; j < tags[i].length; j++) {
-      if (tags[i][j] != " ") 
-      c = 0;
-    }
-    if (!(tags[i] == "" || c)) {
-      arr.push(tags[i]);
-    }
-  }
-  return arr;
-}
 
 
 const createBlog = async function (req, res) {
@@ -25,14 +9,10 @@ const createBlog = async function (req, res) {
     const authdata = data.authorId;
     // accessing authorId from token
     let authId = req.decodedToken.authorId;
-    if (authdata != authId) {
+    if (authdata != authId) 
       return res.status(404).send({ status: false, msg: "not a valid author to create a blog" });
-    }
-    // tags null value handled()
-     data.tags = checkTags(data.tags);
-    //  subcategory null value handled
-    data.subcategory=checkTags(data.subcategory);
-    // creates new blog in database
+    
+   
     const blog = await blogModel.create(data);
     res.status(201).send({ status: true, data: blog });
   } catch (error) {
@@ -68,11 +48,8 @@ const updatedBlog = async (req, res) => {
   try {
     const blogId = req.params.blogId;
     let { title, body, tags, subcategory } = req.body;
-    // tags null value handled
-      tags = checkTags(tags);
-   // subcategory null value handled
-
-// updating blog contents that are provided in req.body
+    
+    // updating blog contents that are provided in req.body
     let updateContent = {
       title: title,
       body: body,

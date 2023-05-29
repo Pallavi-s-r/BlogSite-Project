@@ -118,6 +118,30 @@ const validPassword = (req, res, next) => {
   }
 };
 
+const missingFieldAuthor= async (req, res,next) => {
+  try{const { fname, lname, title, email, password } = req.body;
+    // handling mandatory field name is present in req.body
+    if (!fname || !lname || !title || !email || !password) {
+      return res.status(400).send({ status: false, msg: "Missing Required Field" });
+    }
+  next();}
+    catch(err){
+      return res.status(500).send({ status: false, msg: err.message });
+    }
+}
+const missingFieldBlog= async (req, res,next) => {
+  try{const { title, body, category } = req.body;
+    // handling mandatory field name is present in req.body
+    if (!title || !body || !category) {
+      return res.status(400).send({ status: false, msg: "Missing Required Field" });
+    }
+  next();
+}
+    catch(err){
+      return res.status(500).send({ status: false, msg: err.message });
+    }
+}
+
 
 
 
@@ -128,5 +152,7 @@ module.exports = {
   validBlogId,
   validEmail,
   uniqueEmail,
-  validPassword
+  validPassword,
+  missingFieldAuthor,
+  missingFieldBlog
 };

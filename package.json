@@ -4,6 +4,7 @@
   "description": "Repository for backend cohort - Technetium",
   "main": "index.js",
   "scripts": {
+    "start":"nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines":{
